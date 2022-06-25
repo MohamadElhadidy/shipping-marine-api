@@ -1,0 +1,35 @@
+.wrapper table tr,
+table tr td {
+  border: 1px solid #000;
+}
+.dataTable th {
+  background: rgb(24, 143, 190);
+  font-size: 0.6rem;
+  color: #fff;
+}
+.dataTable td {
+  font-size: 0.7rem;
+}
+.dataTables_info {
+  font-size: 0.6rem;
+}
+.wrapper table tbody td {
+  font-size: 1rem;
+}
+.dataTables_filter input {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border-radius: 20px !important;
+  border: 2px solid rgb(0, 0, 0) !important;
+}
+
+.dataTables_length select,
+.dataTables_length {
+  font-weight: bold;
+  font-size: 0.6rem;
+}
+
+.dataTables_processing {
+  background-color: rgb(6, 47, 114) !important;
+}
