@@ -504,7 +504,9 @@ $output3 .= '
             <tr>
              <th style="background-color:'.$colors[$i].'; color:white; border: 1px solid black;">رقم العنبر</th>
               <th style="background-color:'.$colors[$i].'; color:white; border: 1px solid black;">عدد النقلات </th>
-              <th style="background-color:'.$colors[$i].'; color:white; border: 1px solid black;">اجمالي الكمية </th>';
+              <th style="background-color:'.$colors[$i].'; color:white; border: 1px solid black;">اجمالي الكمية </th>
+              <th style="background-color:'.$colors[$i].'; color:white; border: 1px solid black;">السعه</th>
+              <th style="background-color:'.$colors[$i].'; color:white; border: 1px solid black;">المتبقي</th>';
               if ($jumbo !='0'){$output3 .= '
 <th style="background-color:'.$colors[$i].'; color:white; border: 1px solid black;">جامبو</th>
 
@@ -534,19 +536,27 @@ if ($result3->num_rows > 0) {
          $R =number_format((float)$R, 3, '.', '');
          
 // ////////////////////////////////////add vessel id
-         $vessel_ids=[1080,1079,1081,1082,1084,1088,1089];
+         $query333 ="select SUM(qnt) as qnts  from rooms_qnt where room_no = '".$row3["room_no"]."'  AND  vessel_id = '$vessel_id'  ";
+        $result333= mysqli_query($con, $query333);
+
+        if(mysqli_num_rows($result333) > 0) {
+            $row333= mysqli_fetch_assoc($result333);
+            $qnts33 = $row333['qnts'];
+            if($qnts33 == 0 ) $qnts33 = '---';
+        }
          
-         if(!in_array($vessel_id,$vessel_ids)) 
-         {
-             $arr[$p]='-';
-             $R='-';
-         }
 
         $output3 .= '
             <tr>  
              <th color:black; border: 1px solid black;font-size:12px;">   <span style="color:black;">'.$row33["room_no"].'</span> </th>
               <th color:black; border: 1px solid black;font-size:12px;">   <span style="color:black;">'.$row33["count"]. ' </span> </th>
-              <th color:black; border: 1px solid black;font-size:12px;">   <span style="color:black;">' . number_format((float)$qnts3, 3, '.', '')  . '  </span>  </th>';
+              <th color:black; border: 1px solid black;font-size:12px;">   <span style="color:black;">' . number_format((float)$qnts3, 3, '.', '')  . '  </span>  </th>
+              <th color:black; border: 1px solid black;font-size:12px;">   <span style="color:black;">' . number_format((float)$qnts33, 3, '.', '')  . '  </span>  </th>';
+              if($qnts33 == '---'){
+$output3 .='<th color:black; border: 1px solid black;font-size:12px;">   <span style="color:black;">---</span></th>';
+                } else{
+$output3 .= '<th color:black; border: 1px solid black;font-size:12px;"><span style="color:black;">' . number_format(($qnts33 -$qnts3), 3, '.', '')  . '  </span>  </th>';
+              }
               if ($jumbo !='0'){$output3 .= '
                 <th color:black; border: 1px solid black;font-size:12px;">   <span style="color:green;">'.$row33["jumbo"].' </span> </th>
 ';}$output3 .= '
